@@ -13,11 +13,12 @@ import com.example.bestandroidcode.R
 import com.example.bestandroidcode.model.Cat
 import com.example.bestandroidcode.network.CatAPI
 import com.example.bestandroidcode.network.ServiceBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
+@AndroidEntryPoint
 class AdvanceFragment : Fragment() {
 
     var currentCatObject: Cat? = null

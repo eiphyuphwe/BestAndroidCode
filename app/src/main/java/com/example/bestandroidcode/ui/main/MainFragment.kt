@@ -14,11 +14,14 @@ import com.example.bestandroidcode.R
 import com.example.bestandroidcode.model.Cat
 import com.example.bestandroidcode.network.CatAPI
 import com.example.bestandroidcode.network.ServiceBuilder
+import dagger.hilt.android.AndroidEntryPoint
+
 import kotlinx.android.synthetic.main.main_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     companion object {
@@ -66,7 +69,7 @@ class MainFragment : Fragment() {
         btnProUser.setOnClickListener {
             val advanceFragment = AdvanceFragment()
 
-            val transaction = activity!!.supportFragmentManager.beginTransaction()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.container, advanceFragment)
             transaction.addToBackStack("")
             transaction.commit()

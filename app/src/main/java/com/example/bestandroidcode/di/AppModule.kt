@@ -1,19 +1,24 @@
 package com.example.bestandroidcode.di
 
+import com.example.bestandroidcode.BuildConfig
 import com.example.bestandroidcode.network.CatAPI
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 class AppModule {
 
     //provides Gson
@@ -25,8 +30,16 @@ class AppModule {
     @Singleton
     fun providesRetrofit(gson: Gson) : Retrofit = Retrofit.Builder()
         .baseUrl("https://api.thecatapi.com/")
-        .client(
-            OkHttpClient.Builder().build()
+        .client(OkHttpClient.Builder().also {
+                client -> if(BuildConfig.DEBUG) {
+            val logging = HttpLoggingInterceptor()
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+            client.addInterceptor(logging)
+            client.connectTimeout(120, TimeUnit.SECONDS)
+            client.readTimeout(120, TimeUnit.SECONDS)
+            client.protocols(Collections.singletonList(Protocol.HTTP_1_1))
+            }
+        }.build()
         )
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()

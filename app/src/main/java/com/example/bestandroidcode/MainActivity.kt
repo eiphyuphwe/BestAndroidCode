@@ -10,7 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.bestandroidcode.ui.main.AdvanceFragment
 import com.example.bestandroidcode.ui.main.MainFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     // Best Android Code does not need comments to explain the code

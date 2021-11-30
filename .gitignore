@@ -379,3 +379,11 @@ lint/tmp/
 .idea/misc.xml
 .idea/modules.xml
 .idea/modules/BestAndroidCode.iml
+.idea/modules/BestAndroidCode.iml
+.idea/modules.xml
+.idea/misc.xml
+.idea/gradle.xml
+.gradle/checksums/checksums.lock
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/7.0.2/fileHashes/fileHashes.lock
+.gradle/7.0.2/fileHashes/fileHashes.bin
