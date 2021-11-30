@@ -58,7 +58,7 @@ class AdvanceFragment : Fragment() {
 
         generateQuestion()
 
-        val adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, categoryList)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spCategory.adapter = adapter
 
