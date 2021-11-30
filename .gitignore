@@ -371,3 +371,11 @@ lint/tmp/
 .idea/modules.xml
 .idea/modules/app/BestAndroidCode.app.iml
 .idea/modules/BestAndroidCode.iml
+.gradle/7.0.2/fileHashes/fileHashes.bin
+.gradle/7.0.2/fileHashes/fileHashes.lock
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/checksums/checksums.lock
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/modules/BestAndroidCode.iml
