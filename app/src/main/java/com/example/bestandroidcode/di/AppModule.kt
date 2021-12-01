@@ -1,6 +1,8 @@
 package com.example.bestandroidcode.di
 
+
 import com.example.bestandroidcode.BuildConfig
+import com.example.bestandroidcode.datasource.network.ApiDataSource
 import com.example.bestandroidcode.network.CatAPI
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -48,4 +50,9 @@ class AppModule {
     @Provides
     @Singleton
     fun provideBuildService(retrofit: Retrofit) : CatAPI = retrofit.create(CatAPI::class.java)
+
+    @Provides
+    @Singleton
+    fun provideApiDataSource(catAPIService: CatAPI) = ApiDataSource(catAPIService)
+
 }

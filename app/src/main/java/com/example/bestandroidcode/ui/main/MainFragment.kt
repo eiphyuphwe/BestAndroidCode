@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bestandroidcode.MainActivity
 import com.example.bestandroidcode.R
@@ -28,14 +30,15 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-   // private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: MainViewModel
     //ViewModel
-    private val viewModel: MainViewModel by viewModels()
+    //private val viewModel : MainViewModel by viewModels()
 
     var currentCatObject: Cat? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
@@ -43,28 +46,8 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         btnLoadCat.setOnClickListener {
-            val request = ServiceBuilder.buildService(CatAPI::class.java)
-            val call = request.getCatRandom()
-
-            call.enqueue(object : Callback<List<Cat>> {
-                override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
-                    if (response.isSuccessful) {
-
-                        currentCatObject = response.body()!!.first()
-
-                        Glide.with(this@MainFragment)
-                            .load(response.body()!!.first().url)
-                            .into(ivCat)
-
-                        val activity = activity as MainActivity
-                        activity.refreshFavoriteButton(currentCatObject!!.url)
-                    }
-                }
-
-                override fun onFailure(call: Call<List<Cat>>, t: Throwable) {
-                    Toast.makeText(activity, "${t.message}", Toast.LENGTH_SHORT).show()
-                }
-            })
+            viewModel.getCatRandom()
+            observeRandomCatData()
         }
 
         btnProUser.setOnClickListener {
@@ -75,6 +58,18 @@ class MainFragment : Fragment() {
             transaction.addToBackStack("")
             transaction.commit()
         }
+    }
+
+    fun observeRandomCatData() {
+        viewModel.randomCatDataList.observe(viewLifecycleOwner, Observer {
+            currentCatObject = it.body()!!.first()
+            Glide.with(this@MainFragment)
+                .load(it.body()!!.first().url)
+                .into(ivCat)
+
+            val activity = activity as MainActivity
+            activity.refreshFavoriteButton(currentCatObject!!.url)
+        })
     }
 
 }

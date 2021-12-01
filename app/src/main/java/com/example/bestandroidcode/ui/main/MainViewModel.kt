@@ -1,8 +1,25 @@
 package com.example.bestandroidcode.ui.main
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.bestandroidcode.datasource.MainRepository
+import com.example.bestandroidcode.model.Cat
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import retrofit2.Response
+import javax.inject.Inject
 
-class MainViewModel @ViewModelInject constructor(): ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(val mainRepository: MainRepository): ViewModel() {
     // Hmm, why is this empty?
+    private val _randomCatDataList = MutableLiveData<Response<List<Cat>>>()
+    val randomCatDataList : LiveData<Response<List<Cat>>> = _randomCatDataList
+
+    fun getCatRandom() {
+        viewModelScope.launch {
+           mainRepository.getCatRandom().collect {
+                _randomCatDataList.postValue(it)
+            }
+        }
+    }
 }
