@@ -7,16 +7,14 @@ import android.view.ViewGroup
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bestandroidcode.MainActivity
 import com.example.bestandroidcode.R
 import com.example.bestandroidcode.model.Cat
-import com.example.bestandroidcode.network.CatAPI
-import com.example.bestandroidcode.network.ServiceBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.android.synthetic.main.main_fragment.*
 
 @AndroidEntryPoint
 class AdvanceFragment : Fragment() {
@@ -43,12 +41,14 @@ class AdvanceFragment : Fragment() {
     private var selectedCategoryId: Int = -1
     private var variableA: Int = 0
     private var variableB: Int = 0
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.advance_fragment, container, false)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         ivCat = view.findViewById(R.id.ivCat)
         spCategory = view.findViewById(R.id.spCategory)
@@ -75,31 +75,9 @@ class AdvanceFragment : Fragment() {
 
             if (answer != null) {
                 if (variableA + variableB == answer) {
-                    val request = ServiceBuilder.buildService(CatAPI::class.java)
-                    val call = request.getCatBasedOnCategory(selectedCategoryId.toString())
+                    viewModel.getCatBasedOnCategory(selectedCategoryId.toString())
+                    observeCatData()
 
-                    call.enqueue(object : Callback<List<Cat>> {
-                        override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
-                            if (response.isSuccessful) {
-
-                                currentCatObject = response.body()!!.first()
-
-                                Glide.with(this@AdvanceFragment)
-                                    .load(response.body()!!.first().url)
-                                    .into(ivCat)
-
-                                val activity = activity as MainActivity
-                                activity.refreshFavoriteButton(currentCatObject!!.url)
-
-                                generateQuestion()
-                                etAnswer.setText("")
-                            }
-                        }
-
-                        override fun onFailure(call: Call<List<Cat>>, t: Throwable) {
-                            Toast.makeText(activity, "${t.message}", Toast.LENGTH_SHORT).show()
-                        }
-                    })
                 } else {
                     Toast.makeText(activity, "The Meow Lord did not approve your answer!", Toast.LENGTH_SHORT).show()
                 }
@@ -117,6 +95,21 @@ class AdvanceFragment : Fragment() {
         variableB = (0..10).random()
 
         tvQuestion.text = "${variableA} + ${variableB} = ?"
+    }
+
+    fun observeCatData() {
+        viewModel.randomCatDataList.observe(viewLifecycleOwner, Observer {
+            currentCatObject = it.body()!!.first()
+            Glide.with(this@AdvanceFragment)
+                .load(it.body()!!.first().url)
+                .into(ivCat)
+
+            val activity = activity as MainActivity
+            activity.refreshFavoriteButton(currentCatObject!!.url)
+
+            generateQuestion()
+            etAnswer.setText("")
+        })
     }
 
 }

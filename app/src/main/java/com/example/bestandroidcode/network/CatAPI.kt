@@ -13,5 +13,5 @@ interface CatAPI {
     suspend fun getCatRandom(): Response<List<Cat>>
 
     @GET("/v1/images/search")
-    fun getCatBasedOnCategory(@Query("category_ids") category_ids: String): Call<List<Cat>>
+    suspend fun getCatBasedOnCategory(@Query("category_ids") category_ids: String): Response<List<Cat>>
 }

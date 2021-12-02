@@ -12,6 +12,6 @@ class ApiDataSource @Inject constructor(private val catAPI: CatAPI) {
         return catAPI.getCatRandom()
     }
 
-    suspend fun getCatBasedOnCategory(categoryIds: String) : Call<List<Cat>> = catAPI.getCatBasedOnCategory(categoryIds)
+    suspend fun getCatBasedOnCategory(categoryIds: String) : Response<List<Cat>> = catAPI.getCatBasedOnCategory(categoryIds)
 
 }

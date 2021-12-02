@@ -22,4 +22,12 @@ class MainViewModel @Inject constructor(val mainRepository: MainRepository): Vie
             }
         }
     }
+
+    fun getCatBasedOnCategory(categoryIds:String) {
+        viewModelScope.launch {
+            mainRepository.getCatBasedOnCategory(categoryIds).collect {
+                _randomCatDataList.postValue(it)
+            }
+        }
+    }
 }
