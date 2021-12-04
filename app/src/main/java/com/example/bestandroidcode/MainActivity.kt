@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.bestandroidcode.ui.main.AdvanceFragment
 import com.example.bestandroidcode.ui.main.MainFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.main_activity.*
 
 
 @AndroidEntryPoint
@@ -28,11 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         sharedPref = getSharedPreferences("default", Context.MODE_PRIVATE)
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
-                    .commitNow()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -48,8 +44,7 @@ class MainActivity : AppCompatActivity() {
         R.id.action_favorite -> {
 
             val currentFavoriteList = sharedPref.getStringSet("FAVORITE_LIST", HashSet())
-
-            val f: Fragment? = supportFragmentManager.findFragmentById(R.id.container)
+            val f: Fragment? = my_nav_host_fragment.childFragmentManager.fragments.get(0)
 
             if (f is MainFragment) {
                 if (f.currentCatObject != null) {
@@ -103,6 +98,7 @@ class MainActivity : AppCompatActivity() {
         R.id.action_favorite_list -> {
             val intent = Intent(this, FavoriteListActivity::class.java)
             startActivity(intent)
+
             true
         }
 

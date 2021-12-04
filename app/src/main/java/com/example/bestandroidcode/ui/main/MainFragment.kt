@@ -2,26 +2,25 @@ package com.example.bestandroidcode.ui.main
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.bestandroidcode.MainActivity
 import com.example.bestandroidcode.R
 import com.example.bestandroidcode.model.Cat
-import com.example.bestandroidcode.network.CatAPI
-import com.example.bestandroidcode.network.ServiceBuilder
+
 import dagger.hilt.android.AndroidEntryPoint
 
 import kotlinx.android.synthetic.main.main_fragment.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -51,17 +50,13 @@ class MainFragment : Fragment() {
         }
 
         btnProUser.setOnClickListener {
-            val advanceFragment = AdvanceFragment()
-
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container, advanceFragment)
-            transaction.addToBackStack("")
-            transaction.commit()
+            findNavController().navigate(R.id.action_mainFragment_to_advanceFragment2)
         }
     }
 
     fun observeRandomCatData() {
         viewModel.randomCatDataList.observe(viewLifecycleOwner, Observer {
+            Log.e("Cat",it.body()!!.size.toString())
             currentCatObject = it.body()!!.first()
             Glide.with(this@MainFragment)
                 .load(it.body()!!.first().url)
