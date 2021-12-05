@@ -92,6 +92,13 @@ dependencies {
     // Feature module Support
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
 
+    // Coroutines testing
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0'
+
+    //MockWebServer
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.9.1"
+    testImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
