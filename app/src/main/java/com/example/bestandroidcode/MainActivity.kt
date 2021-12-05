@@ -3,6 +3,7 @@ package com.example.bestandroidcode
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.bestandroidcode.ui.main.AdvanceFragment
 import com.example.bestandroidcode.ui.main.MainFragment
@@ -27,16 +30,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPref: SharedPreferences
 
     private var mOptionsMenu: Menu? = null
+    val appBarConfiguration : AppBarConfiguration?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        val navController = findNavController(R.id.my_nav_host_fragment)
+        val navHostFragment = supportFragmentManager.findFragmentById(
+            R.id.my_nav_host_fragment
+        ) as NavHostFragment
+        val navController = navHostFragment.navController
+        val toolbar = toolbar
         val appBarConfiguration = AppBarConfiguration(navController.graph)
-        findViewById<Toolbar>(R.id.toolbar)
-            .setupWithNavController(navController, appBarConfiguration)
-
+        setSupportActionBar(toolbar)
+        setupActionBarWithNavController(navController,appBarConfiguration)
 
         sharedPref = getSharedPreferences("default", Context.MODE_PRIVATE)
 
@@ -107,11 +114,14 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        R.id.action_favorite_list -> {
-            val intent = Intent(this, FavoriteListActivity::class.java)
-            startActivity(intent)
+        R.id.favoriteListFragment -> {
+           // val intent = Intent(this, FavoriteListActivity::class.java)
+         //   startActivity(intent)
 
-            true
+            //true
+             item.onNavDestinationSelected(
+                findNavController(R.id.my_nav_host_fragment)
+            ) || super.onOptionsItemSelected(item)
         }
 
         else -> {
@@ -131,5 +141,10 @@ class MainActivity : AppCompatActivity() {
                 favoriteItem.setIcon(R.drawable.baseline_favorite_border_black_24)
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.my_nav_host_fragment).navigateUp(
+        )
     }
 }

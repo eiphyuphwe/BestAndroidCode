@@ -1,5 +1,6 @@
 package com.example.bestandroidcode.ui.main
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +49,7 @@ class AdvanceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.advance_fragment, container, false)
+        activity?.title  = "Cats"
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         ivCat = view.findViewById(R.id.ivCat)

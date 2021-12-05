@@ -10,7 +10,7 @@
         app:showAsAction="always"/>
 
     <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_favorite_list"
+    <item android:id="@+id/favoriteListFragment"
         android:title="List"
         app:showAsAction="always"/>
 

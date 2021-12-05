@@ -1,6 +1,7 @@
 package com.example.bestandroidcode.ui.main
 
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,7 +44,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        activity?.title  = "Cats"
         btnLoadCat.setOnClickListener {
             viewModel.getCatRandom()
             observeRandomCatData()

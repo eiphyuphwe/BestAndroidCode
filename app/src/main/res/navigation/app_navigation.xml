@@ -19,4 +19,9 @@
         android:name="com.example.bestandroidcode.ui.main.AdvanceFragment"
         tools:layout="@layout/main_fragment"
         android:label="AdvanceFragment" />
+    <fragment
+        android:id="@+id/favoriteListFragment"
+        android:name="com.example.bestandroidcode.ui.main.FavoriteListFragment"
+        tools:layout="@layout/favorite_list_fragment"
+        android:label="FavoriteListFragment" />
 </navigation>
