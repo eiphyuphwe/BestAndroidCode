@@ -92,8 +92,22 @@ dependencies {
     // Feature module Support
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
 
-    // Coroutines testing
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0'
+
+
+    testImplementation("junit:junit:4.12")
+    // Optional -- Robolectric environment
+    testImplementation('androidx.test:core:1.4.0')
+    // Optional -- Mockito framework
+    // optional - Test helpers for LiveData
+    def arch_version = "2.1.0"
+    testImplementation "androidx.arch.core:core-testing:$arch_version"
+
+    // Coroutine Testing
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$couritines_version"
+    testImplementation "org.mockito:mockito-core:3.3.3"
+    testImplementation 'org.mockito:mockito-inline:3.3.3'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+
 
     //MockWebServer
     testImplementation "com.squareup.okhttp3:mockwebserver:4.9.1"

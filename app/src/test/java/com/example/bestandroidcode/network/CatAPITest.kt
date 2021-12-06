@@ -1,9 +1,7 @@
-package com.example.bestandroidcode.datasource
+package com.example.bestandroidcode.network
 
-import com.example.bestandroidcode.datasource.network.ApiDataSource
 import com.example.bestandroidcode.network.CatAPI
 import com.google.gson.GsonBuilder
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -15,14 +13,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @RunWith(JUnit4::class)
-class MainRepositoryTest {
+class CatAPITest {
 
    /* @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()*/
     private val server = MockWebServer()
-    private lateinit var repository: MainRepository
+    lateinit var catAPIService: CatAPI
     private lateinit var mockedResponse: String
-    private lateinit var apiDataSource: ApiDataSource
     private val gson = GsonBuilder()
         .setLenient()
         .create()
@@ -33,13 +30,12 @@ class MainRepositoryTest {
         val okHttpClient = OkHttpClient
             .Builder()
             .build()
-        val service = Retrofit.Builder()
+
+         catAPIService = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .build().create(CatAPI::class.java)
-        apiDataSource = ApiDataSource(service)
-        repository = MainRepository(apiDataSource)
     }
 
    @Test
@@ -50,8 +46,10 @@ class MainRepositoryTest {
                 .setResponseCode(200)
                 .setBody(mockedResponse)
         )
-        val response = runBlocking { repository.getCatRandom() }
+        val response = runBlocking { catAPIService.getCatRandom() }
         Assert.assertNotNull(response)
+        Assert.assertEquals(1,response.body()!!.size)
+        Assert.assertEquals("SqEbHe6XM",response.body()!!.get(0).id)
     }
 
     @Test
@@ -62,8 +60,10 @@ class MainRepositoryTest {
                 .setResponseCode(200)
                 .setBody(mockedResponse)
         )
-        val response = runBlocking { repository.getCatBasedOnCategory("5") }
+        val response = runBlocking { catAPIService.getCatBasedOnCategory("5") }
         Assert.assertNotNull(response)
+        Assert.assertEquals(1,response.body()!!.size)
+        Assert.assertEquals("5kr",response.body()!!.get(0).id)
     }
 
 
