@@ -1,6 +1,5 @@
 package com.example.bestandroidcode.network
 
-import com.example.bestandroidcode.network.CatAPI
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient

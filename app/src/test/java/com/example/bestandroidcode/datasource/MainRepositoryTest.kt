@@ -8,6 +8,7 @@ import com.example.currencyconverterapp.viewmodel.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Before
@@ -51,7 +52,7 @@ class MainRepositoryTest {
         )
         val response = Response.success(catList)
 
-        runBlockingTest {
+        runBlocking {
             Mockito.`when`(apiDataSource.getCatRandom()).thenReturn(response)
             val testee = MainRepository(apiDataSource)
             flow = testee.getCatRandom()
@@ -72,7 +73,7 @@ class MainRepositoryTest {
         )
         val response = Response.success(catList)
 
-        runBlockingTest {
+        runBlocking {
             Mockito.`when`(apiDataSource.getCatBasedOnCategory("1")).thenReturn(response)
             val testee = MainRepository(apiDataSource)
             flow = testee.getCatBasedOnCategory("1")
