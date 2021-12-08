@@ -1,7 +1,7 @@
 package com.example.bestandroidcode.di
 
-import com.example.bestandroidcode.datasource.network.ApiDataSource
 import com.example.bestandroidcode.datasource.MainRepository
+import com.example.bestandroidcode.datasource.network.ApiDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +14,6 @@ class RepositoryModule {
 
     @Provides
     @ViewModelScoped
-    fun providesMainRepo(apiDataSource: ApiDataSource) : MainRepository = MainRepository(apiDataSource)
+    fun providesMainRepo(apiDataSource: ApiDataSource): MainRepository =
+        MainRepository(apiDataSource)
 }

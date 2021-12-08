@@ -6,7 +6,6 @@ import com.example.bestandroidcode.network.CatAPI
 import com.example.currencyconverterapp.viewmodel.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -49,8 +48,8 @@ class ApiDataSourceTest {
         runBlocking {
             Mockito.`when`(catAPI.getCatRandom()).thenReturn(response)
             val actualResponse = apiDataSource.getCatRandom()
-            Assert.assertEquals(1,actualResponse.body()!!.size)
-            Assert.assertEquals("1",actualResponse.body()!!.get(0).id)
+            Assert.assertEquals(1, actualResponse.body()!!.size)
+            Assert.assertEquals("1", actualResponse.body()!!.get(0).id)
         }
     }
 
@@ -63,8 +62,8 @@ class ApiDataSourceTest {
         runBlocking {
             Mockito.`when`(catAPI.getCatBasedOnCategory("1")).thenReturn(response)
             val actualResponse = apiDataSource.getCatBasedOnCategory("1")
-            Assert.assertEquals(1,actualResponse.body()!!.size)
-            Assert.assertEquals("1",actualResponse.body()!!.get(0).id)
+            Assert.assertEquals(1, actualResponse.body()!!.size)
+            Assert.assertEquals("1", actualResponse.body()!!.get(0).id)
         }
     }
 }

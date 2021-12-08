@@ -1,6 +1,5 @@
 package com.example.bestandroidcode.ui.main
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,7 +48,7 @@ class AdvanceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.advance_fragment, container, false)
-        activity?.title  = "Cats"
+        activity?.title = "Cats"
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         ivCat = view.findViewById(R.id.ivCat)
@@ -60,12 +59,18 @@ class AdvanceFragment : Fragment() {
 
         generateQuestion()
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryList)
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spCategory.adapter = adapter
 
         spCategory.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
                 selectedCategoryId = categoryIdList[position]
             }
 
@@ -81,10 +86,18 @@ class AdvanceFragment : Fragment() {
                     observeCatData()
 
                 } else {
-                    Toast.makeText(activity, "The Meow Lord did not approve your answer!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        activity,
+                        "The Meow Lord did not approve your answer!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
-                Toast.makeText(activity, "The Meow Lord did not approve your answer!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    activity,
+                    "The Meow Lord did not approve your answer!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }

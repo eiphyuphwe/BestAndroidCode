@@ -30,18 +30,19 @@ class AppModule {
     //Provides for networking
     @Provides
     @Singleton
-    fun providesRetrofit(gson: Gson) : Retrofit = Retrofit.Builder()
+    fun providesRetrofit(gson: Gson): Retrofit = Retrofit.Builder()
         .baseUrl("https://api.thecatapi.com/")
-        .client(OkHttpClient.Builder().also {
-                client -> if(BuildConfig.DEBUG) {
-            val logging = HttpLoggingInterceptor()
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-            client.addInterceptor(logging)
-            client.connectTimeout(120, TimeUnit.SECONDS)
-            client.readTimeout(120, TimeUnit.SECONDS)
-            client.protocols(Collections.singletonList(Protocol.HTTP_1_1))
-            }
-        }.build()
+        .client(
+            OkHttpClient.Builder().also { client ->
+                if (BuildConfig.DEBUG) {
+                    val logging = HttpLoggingInterceptor()
+                    logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+                    client.addInterceptor(logging)
+                    client.connectTimeout(120, TimeUnit.SECONDS)
+                    client.readTimeout(120, TimeUnit.SECONDS)
+                    client.protocols(Collections.singletonList(Protocol.HTTP_1_1))
+                }
+            }.build()
         )
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
@@ -49,7 +50,7 @@ class AppModule {
     //Api Service with retrofit instance
     @Provides
     @Singleton
-    fun provideBuildService(retrofit: Retrofit) : CatAPI = retrofit.create(CatAPI::class.java)
+    fun provideBuildService(retrofit: Retrofit): CatAPI = retrofit.create(CatAPI::class.java)
 
     @Provides
     @Singleton

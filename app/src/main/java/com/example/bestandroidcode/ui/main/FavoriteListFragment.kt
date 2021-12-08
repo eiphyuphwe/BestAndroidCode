@@ -23,16 +23,18 @@ class FavoriteListFragment : Fragment() {
         fun newInstance() = FavoriteListFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        val view =  inflater.inflate(R.layout.favorite_list_fragment, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val view = inflater.inflate(R.layout.favorite_list_fragment, container, false)
         return view
 
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activity?.title  = "Your Favorite Cats"
+        activity?.title = "Your Favorite Cats"
         val sharedPref = activity?.getSharedPreferences("default", Context.MODE_PRIVATE)
         val currentFavoriteList = sharedPref?.getStringSet("FAVORITE_LIST", HashSet())
 

@@ -9,7 +9,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -46,9 +45,9 @@ class MainRepositoryTest {
     @Test
     fun testGetCatRandom_ReturnCatListSuccess() {
 
-        var flow :Flow<Response<List<Cat>>>
-        val catList : List<Cat> = listOf(
-            Cat("1","https://cdn2.thecatapi.com/images/SqEbHe6XM.jpg",300,300)
+        var flow: Flow<Response<List<Cat>>>
+        val catList: List<Cat> = listOf(
+            Cat("1", "https://cdn2.thecatapi.com/images/SqEbHe6XM.jpg", 300, 300)
         )
         val response = Response.success(catList)
 
@@ -57,19 +56,21 @@ class MainRepositoryTest {
             val testee = MainRepository(apiDataSource)
             flow = testee.getCatRandom()
             Assert.assertNotNull(flow)
-            flow.collect {
-                result:Response<List<Cat>> ->
-                Assert.assertEquals(1,result.body()!!.size)
-                Assert.assertEquals("https://cdn2.thecatapi.com/images/SqEbHe6XM.jpg",result.body()!!.get(0).url)
+            flow.collect { result: Response<List<Cat>> ->
+                Assert.assertEquals(1, result.body()!!.size)
+                Assert.assertEquals(
+                    "https://cdn2.thecatapi.com/images/SqEbHe6XM.jpg",
+                    result.body()!!.get(0).url
+                )
             }
         }
     }
 
     @Test
     fun testGetCatByCategory_ReturnCatListSuccess() {
-        var flow :Flow<Response<List<Cat>>>
-        val catList : List<Cat> = listOf(
-            Cat("1","https://cdn2.thecatapi.com/images/SqEbHe6XM.jpg",300,300)
+        var flow: Flow<Response<List<Cat>>>
+        val catList: List<Cat> = listOf(
+            Cat("1", "https://cdn2.thecatapi.com/images/SqEbHe6XM.jpg", 300, 300)
         )
         val response = Response.success(catList)
 
@@ -78,10 +79,12 @@ class MainRepositoryTest {
             val testee = MainRepository(apiDataSource)
             flow = testee.getCatBasedOnCategory("1")
             Assert.assertNotNull(flow)
-            flow.collect {
-                    result:Response<List<Cat>> ->
-                Assert.assertEquals(1,result.body()!!.size)
-                Assert.assertEquals("https://cdn2.thecatapi.com/images/SqEbHe6XM.jpg",result.body()!!.get(0).url)
+            flow.collect { result: Response<List<Cat>> ->
+                Assert.assertEquals(1, result.body()!!.size)
+                Assert.assertEquals(
+                    "https://cdn2.thecatapi.com/images/SqEbHe6XM.jpg",
+                    result.body()!!.get(0).url
+                )
             }
         }
     }

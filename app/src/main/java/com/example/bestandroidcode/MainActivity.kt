@@ -1,21 +1,17 @@
 package com.example.bestandroidcode
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.bestandroidcode.ui.main.AdvanceFragment
 import com.example.bestandroidcode.ui.main.MainFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPref: SharedPreferences
 
     private var mOptionsMenu: Menu? = null
-    val appBarConfiguration : AppBarConfiguration?= null
+    val appBarConfiguration: AppBarConfiguration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar = toolbar
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         setSupportActionBar(toolbar)
-        setupActionBarWithNavController(navController,appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
         sharedPref = getSharedPreferences("default", Context.MODE_PRIVATE)
 
@@ -71,9 +67,9 @@ class MainActivity : AppCompatActivity() {
 
                     if (catImageUrl.isNotBlank()) {
                         if (currentFavoriteList!!.contains(catImageUrl)) {
-                            currentFavoriteList!!.remove(catImageUrl)
+                            currentFavoriteList.remove(catImageUrl)
                         } else {
-                            currentFavoriteList!!.add(catImageUrl)
+                            currentFavoriteList.add(catImageUrl)
                         }
 
                         val e: SharedPreferences.Editor = sharedPref.edit()
@@ -94,9 +90,9 @@ class MainActivity : AppCompatActivity() {
 
                     if (catImageUrl.isNotBlank()) {
                         if (currentFavoriteList!!.contains(catImageUrl)) {
-                            currentFavoriteList!!.remove(catImageUrl)
+                            currentFavoriteList.remove(catImageUrl)
                         } else {
-                            currentFavoriteList!!.add(catImageUrl)
+                            currentFavoriteList.add(catImageUrl)
                         }
 
                         val e: SharedPreferences.Editor = sharedPref.edit()
@@ -115,11 +111,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         R.id.favoriteListFragment -> {
-           // val intent = Intent(this, FavoriteListActivity::class.java)
-         //   startActivity(intent)
+            // val intent = Intent(this, FavoriteListActivity::class.java)
+            //   startActivity(intent)
 
             //true
-             item.onNavDestinationSelected(
+            item.onNavDestinationSelected(
                 findNavController(R.id.my_nav_host_fragment)
             ) || super.onOptionsItemSelected(item)
         }
